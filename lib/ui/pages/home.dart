@@ -7,12 +7,6 @@ class Home extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final _counter = useState(0);
-    // void _incrementCounter() {
-    //   print('increment ');
-    //   _counter.value++;
-    // }
-
     final _controller = useVocabularyList();
 
     return Scaffold(
@@ -20,7 +14,7 @@ class Home extends HookWidget {
         children: [
           Flexible(
               child: _controller.loading.value
-                  ? Text('loading')
+                  ? const Center(child: CircularProgressIndicator())
                   : ListView(
                       children: _controller.vocabularyList.value
                           .map((vocabulary) => Row(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:vocabulary_note/ui/organisms/common/bottom_navigation_bar.dart';
 
 import './ui/pages/home.dart';
+import './hooks/use_navigation_menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,16 +30,23 @@ class MyApp extends StatelessWidget {
 
 class _PageRoot extends HookWidget {
   const _PageRoot({Key? key}) : super(key: key);
+  static final menuItems = <String, IconData>{
+    'ホーム': Icons.home,
+    'Setting': Icons.settings,
+  };
 
   @override
   Widget build(BuildContext context) {
+    final _navigationController = useNavigationMenu();
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: const Text(appName),
-      ),
-      body: const Home(),
-    );
+        appBar: AppBar(
+          title: const Text(appName),
+        ),
+        body: _navigationController.currentPage,
+        bottomNavigationBar: MyBottomNavigationBar(
+          menuItems: menuItems,
+          currentIndex: _navigationController.currentPageIndex.value,
+          onTap: _navigationController.setCurrentPageIndex,
+        ));
   }
 }
