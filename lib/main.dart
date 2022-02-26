@@ -42,7 +42,10 @@ class _PageRoot extends HookWidget {
         appBar: AppBar(
           title: const Text(appName),
         ),
-        body: _navigationController.currentPage,
+        body: Container(
+          margin: const EdgeInsets.all(8),
+          child: _navigationController.currentPage,
+        ),
         bottomNavigationBar: MyBottomNavigationBar(
           menuItems: menuItems,
           currentIndex: _navigationController.currentPageIndex.value,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:vocabulary_note/hooks/use_vocabulary_list.dart';
+import 'package:vocabulary_note/ui/organisms/add_vocabulary_form.dart';
 
 class Home extends HookWidget {
   const Home({Key? key}) : super(key: key);
@@ -30,7 +31,13 @@ class Home extends HookWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () => {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: false, // <-- trueにするとフルスクリーン
+            builder: (_) => const AddVocabularyForm(),
+          )
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
