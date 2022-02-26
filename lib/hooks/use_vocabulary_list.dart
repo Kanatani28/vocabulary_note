@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:vocabulary_note/database/db.dart';
 import 'package:vocabulary_note/hooks/use_database.dart';
 import 'package:vocabulary_note/models/vocabulary.dart';
 
@@ -21,8 +22,6 @@ class UseVocabularyListResult {
 UseVocabularyListResult useVocabularyList() {
   final loading = useState(true);
   final vocabularyList = useState<List<Vocabulary>>([]);
-  ValueNotifier<Future<Database>> _databaseNotifier = useDatabase();
-  Future<Database> database = _databaseNotifier.value;
 
   void setVocabularyList(List<Vocabulary> newList) {
     vocabularyList.value = newList;
@@ -36,8 +35,8 @@ UseVocabularyListResult useVocabularyList() {
   void fetchVocabularyList() async {
     loading.value = true;
     Future<List<Vocabulary>> fetchExec() async {
-      List<Map<String, Object?>> results =
-          await (await database).query("vocabulary");
+      final db = await VocabularyNoteDB.instance.database;
+      List<Map<String, Object?>> results = await db.query("vocabulary");
 
       List<Vocabulary> list = results
           .map((result) => Vocabulary(

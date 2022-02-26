@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sqflite/sqlite_api.dart';
+import 'package:vocabulary_note/database/db.dart';
 import 'package:vocabulary_note/hooks/use_database.dart';
 
 class VocabularyCreateFromController {
@@ -20,8 +21,6 @@ class VocabularyCreateFromController {
 }
 
 VocabularyCreateFromController useVocabularyCreateForm() {
-  ValueNotifier<Future<Database>> _databaseNotifier = useDatabase();
-  Future<Database> database = _databaseNotifier.value;
   ValueNotifier<String> english = useState("");
   ValueNotifier<String> japanese = useState("");
 
@@ -34,9 +33,9 @@ VocabularyCreateFromController useVocabularyCreateForm() {
   }
 
   addVocabulary() async {
-    Database _database = await database;
+    final db = await VocabularyNoteDB.instance.database;
 
-    await _database.insert(
+    await db.insert(
         "vocabulary", {"english": english.value, "japanese": japanese.value});
   }
 
