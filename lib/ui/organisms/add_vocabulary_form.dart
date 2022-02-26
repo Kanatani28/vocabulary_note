@@ -3,7 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:vocabulary_note/hooks/use_vocabulary_create_form.dart';
 
 class AddVocabularyForm extends HookWidget {
-  const AddVocabularyForm({Key? key}) : super(key: key);
+  final void Function() reload;
+  const AddVocabularyForm({Key? key, required this.reload}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,12 @@ class AddVocabularyForm extends HookWidget {
             )),
         Center(
           child: ElevatedButton(
-            child: const Text("登録"),
-            onPressed: _controller.addVocabulary,
-          ),
+              child: const Text("登録"),
+              onPressed: () async {
+                await _controller.addVocabulary();
+                Navigator.of(context).pop();
+                reload();
+              }),
         )
       ],
     );

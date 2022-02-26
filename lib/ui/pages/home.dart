@@ -34,8 +34,10 @@ class Home extends HookWidget {
         onPressed: () => {
           showModalBottomSheet(
             context: context,
-            isScrollControlled: false, // <-- trueにするとフルスクリーン
-            builder: (_) => const AddVocabularyForm(),
+            isScrollControlled: false,
+            builder: (_) => AddVocabularyForm(
+              reload: _controller.fetchVocabularyList,
+            ),
           )
         },
         tooltip: 'Increment',

@@ -7,7 +7,7 @@ import 'package:vocabulary_note/models/vocabulary.dart';
 class VocabularyCreateFromController {
   ValueNotifier<String> english;
   ValueNotifier<String> japanese;
-  void Function() addVocabulary;
+  Future<void> Function() addVocabulary;
   void Function(String)? setEnglish;
   void Function(String)? setJapanese;
 
@@ -34,9 +34,11 @@ VocabularyCreateFromController useVocabularyCreateForm() {
     japanese.value = value;
   }
 
-  void addVocabulary() {
-    database.then((value) => value.insert(
-        "vocabulary", {"english": english.value, "japanese": japanese.value}));
+  addVocabulary() async {
+    Database _database = await database;
+
+    await _database.insert(
+        "vocabulary", {"english": english.value, "japanese": japanese.value});
   }
 
   return VocabularyCreateFromController(

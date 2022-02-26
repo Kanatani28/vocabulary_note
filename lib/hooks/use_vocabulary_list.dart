@@ -7,10 +7,12 @@ import 'package:vocabulary_note/models/vocabulary.dart';
 class UseVocabularyListResult {
   ValueNotifier<bool> loading;
   ValueNotifier<List<Vocabulary>> vocabularyList;
+  void Function() fetchVocabularyList;
 
   UseVocabularyListResult({
     required this.loading,
     required this.vocabularyList,
+    required this.fetchVocabularyList,
   });
 }
 
@@ -24,7 +26,7 @@ UseVocabularyListResult useVocabularyList() {
     vocabularyList.value = newList;
   }
 
-  Future<void> fetchVocabularyList() async {
+  void fetchVocabularyList() async {
     loading.value = true;
     Future<List<Vocabulary>> fetchExec() async {
       List<Map<String, Object?>> results =
@@ -54,5 +56,6 @@ UseVocabularyListResult useVocabularyList() {
   return UseVocabularyListResult(
     loading: loading,
     vocabularyList: vocabularyList,
+    fetchVocabularyList: fetchVocabularyList,
   );
 }
