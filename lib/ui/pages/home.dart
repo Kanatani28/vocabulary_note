@@ -31,7 +31,7 @@ class Home extends HookWidget {
             context: context,
             isScrollControlled: false,
             builder: (_) => AddVocabularyForm(
-              reload: _controller.fetchVocabularyList,
+              reload: _controller.addVocabularyList,
             ),
           )
         },

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:vocabulary_note/hooks/use_vocabulary_create_form.dart';
+import 'package:vocabulary_note/models/vocabulary.dart';
 
 class AddVocabularyForm extends HookWidget {
-  final void Function() reload;
+  final void Function(Vocabulary) reload;
   const AddVocabularyForm({Key? key, required this.reload}) : super(key: key);
 
   @override
@@ -39,7 +40,9 @@ class AddVocabularyForm extends HookWidget {
               onPressed: () async {
                 await _controller.addVocabulary();
                 Navigator.of(context).pop();
-                reload();
+                reload(Vocabulary(
+                    english: _controller.english.value,
+                    japanese: _controller.japanese.value));
               }),
         )
       ],

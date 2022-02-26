@@ -8,11 +8,13 @@ class UseVocabularyListResult {
   ValueNotifier<bool> loading;
   ValueNotifier<List<Vocabulary>> vocabularyList;
   void Function() fetchVocabularyList;
+  void Function(Vocabulary) addVocabularyList;
 
   UseVocabularyListResult({
     required this.loading,
     required this.vocabularyList,
     required this.fetchVocabularyList,
+    required this.addVocabularyList,
   });
 }
 
@@ -24,6 +26,11 @@ UseVocabularyListResult useVocabularyList() {
 
   void setVocabularyList(List<Vocabulary> newList) {
     vocabularyList.value = newList;
+  }
+
+  void addVocabularyList(Vocabulary appendValue) {
+    List<Vocabulary> newList = [...vocabularyList.value, appendValue];
+    setVocabularyList(newList);
   }
 
   void fetchVocabularyList() async {
@@ -57,5 +64,6 @@ UseVocabularyListResult useVocabularyList() {
     loading: loading,
     vocabularyList: vocabularyList,
     fetchVocabularyList: fetchVocabularyList,
+    addVocabularyList: addVocabularyList,
   );
 }
