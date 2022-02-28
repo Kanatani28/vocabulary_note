@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:vocabulary_note/database/db.dart';
-import 'package:vocabulary_note/hooks/use_database.dart';
 
 class VocabularyCreateFromController {
   ValueNotifier<String> english;

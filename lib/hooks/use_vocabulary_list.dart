@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:vocabulary_note/database/db.dart';
-import 'package:vocabulary_note/hooks/use_database.dart';
 import 'package:vocabulary_note/models/vocabulary.dart';
 
 class UseVocabularyListResult {
@@ -45,7 +44,7 @@ UseVocabularyListResult useVocabularyList() {
               japanese: result["japanese"] as String))
           .toList();
 
-      await Future.delayed(const Duration(seconds: 3));
+      // await Future.delayed(const Duration(seconds: 3));
       return Future<List<Vocabulary>>.value(list);
     }
 
