@@ -33,6 +33,8 @@ dependencies:
   sqflite:
   path:
   settings_ui:
+  hooks_riverpod:
+  state_notifier:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
