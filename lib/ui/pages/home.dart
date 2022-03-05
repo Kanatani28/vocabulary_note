@@ -27,7 +27,7 @@ class Home extends HookWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          showModalBottomSheet(
+          showModalBottomSheet<void>(
             context: context,
             isScrollControlled: false,
             builder: (_) => AddVocabularyForm(

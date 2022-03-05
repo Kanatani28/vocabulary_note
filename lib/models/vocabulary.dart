@@ -6,6 +6,10 @@ class Vocabulary {
   Vocabulary({this.id, required this.english, required this.japanese});
 
   Map<String, dynamic> toMap() {
-    return {"id": id, "english": english, "japanese": japanese};
+    return <String, dynamic>{
+      'id': id,
+      'english': english,
+      'japanese': japanese
+    };
   }
 }
