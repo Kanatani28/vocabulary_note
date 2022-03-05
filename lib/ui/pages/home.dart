@@ -57,7 +57,7 @@ class Home extends HookConsumerWidget {
             ),
           )
         },
-        tooltip: 'Increment',
+        tooltip: '語彙を追加する',
         child: const Icon(Icons.add),
       ),
     );
