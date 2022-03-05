@@ -19,8 +19,13 @@ class VocabularyNoteDB {
     final db = await openDatabase(
       join(await getDatabasesPath(), 'vocabulary_note_database.db'),
       onCreate: (db, version) {
-        db.execute(
-            "CREATE TABLE vocabulary(id INTEGER PRIMARY KEY AUTOINCREMENT, english TEXT, japanese TEXT)");
+        db.execute('''
+          CREATE TABLE vocabulary(
+            id INTEGER PRIMARY KEY AUTOINCREMENT, 
+            english TEXT, 
+            japanese TEXT
+          );
+          ''');
       },
       version: 1,
     );
