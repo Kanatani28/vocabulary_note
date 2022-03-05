@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:vocabulary_note/provider/app_setting.dart';
 
-class Setting extends HookWidget {
+class Setting extends HookConsumerWidget {
   const Setting({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    ValueNotifier<bool> english = useState(true);
-    ValueNotifier<bool> japanese = useState(true);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settingNotifier = ref.read(appSettingProvider.notifier);
+    final _english = useState(settingNotifier.english);
+    final _japanese = useState(settingNotifier.japanese);
+
     return Scaffold(
       body: SettingsList(
         sections: [
@@ -16,19 +20,21 @@ class Setting extends HookWidget {
             title: const Text('表示設定'),
             tiles: <SettingsTile>[
               SettingsTile.switchTile(
-                initialValue: english.value,
+                initialValue: _english.value,
                 leading: const Icon(Icons.language),
                 title: const Text('English'),
                 onToggle: (value) {
-                  english.value = value;
+                  settingNotifier.english = value;
+                  _english.value = value;
                 },
               ),
               SettingsTile.switchTile(
-                initialValue: japanese.value,
+                initialValue: _japanese.value,
                 leading: const Icon(Icons.language),
                 title: const Text('日本語'),
                 onToggle: (value) {
-                  japanese.value = value;
+                  settingNotifier.japanese = value;
+                  _japanese.value = value;
                 },
               ),
             ],

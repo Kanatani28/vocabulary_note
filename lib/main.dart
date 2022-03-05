@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'package:vocabulary_note/hooks/use_navigation_menu.dart';
 import 'package:vocabulary_note/ui/organisms/common/bottom_navigation_bar.dart';
 
-import './ui/pages/home.dart';
-import './hooks/use_navigation_menu.dart';
-
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 const appName = 'Vocabulary Note';
@@ -14,7 +14,6 @@ const appName = 'Vocabulary Note';
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      // home: const Home(title: 'Vocabulary Note'),
       home: const _PageRoot(),
     );
   }
@@ -38,6 +36,7 @@ class _PageRoot extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final _navigationController = useNavigationMenu();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text(appName),

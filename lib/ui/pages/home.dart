@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vocabulary_note/hooks/use_vocabulary_list.dart';
+import 'package:vocabulary_note/provider/app_setting.dart';
 import 'package:vocabulary_note/ui/organisms/add_vocabulary_form.dart';
 import 'package:vocabulary_note/ui/molecules/vocabulary_row.dart';
 
-class Home extends HookWidget {
+class Home extends HookConsumerWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final _controller = useVocabularyList();
+    final settingNotifier = ref.read(appSettingProvider.notifier);
 
     return Scaffold(
       body: Column(
@@ -20,8 +23,11 @@ class Home extends HookWidget {
                   : ListView(
                       children: _controller.vocabularyList.value
                           .map((vocabulary) => VocabularyRow(
-                              english: vocabulary.english,
-                              japanese: vocabulary.japanese))
+                                english: vocabulary.english,
+                                japanese: vocabulary.japanese,
+                                englishVisible: settingNotifier.english,
+                                japaneseVisible: settingNotifier.japanese,
+                              ))
                           .toList())),
         ],
       ),
