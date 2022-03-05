@@ -3,8 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vocabulary_note/hooks/use_vocabulary_list.dart';
 import 'package:vocabulary_note/provider/app_setting.dart';
-import 'package:vocabulary_note/ui/organisms/add_vocabulary_form.dart';
 import 'package:vocabulary_note/ui/molecules/vocabulary_row.dart';
+import 'package:vocabulary_note/ui/organisms/add_vocabulary_form.dart';
 
 class Home extends HookConsumerWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,21 +14,33 @@ class Home extends HookConsumerWidget {
     final _controller = useVocabularyList();
     final settingNotifier = ref.read(appSettingProvider.notifier);
 
+    const loadingView = Center(child: CircularProgressIndicator());
+    final vocabularyListView = ListView(
+        children: _controller.vocabularyList.value
+            .map((vocabulary) => VocabularyRow(
+                  english: vocabulary.english,
+                  japanese: vocabulary.japanese,
+                  englishVisible: settingNotifier.english,
+                  japaneseVisible: settingNotifier.japanese,
+                ))
+            .toList());
+
+    const astToSetupView = Center(child: Text('Setting画面で表示設定をしよう⭐️'));
+
+    Widget _dispView() {
+      if (!settingNotifier.english && !settingNotifier.japanese) {
+        return astToSetupView;
+      }
+      if (_controller.loading.value) {
+        return loadingView;
+      }
+      return vocabularyListView;
+    }
+
     return Scaffold(
       body: Column(
         children: [
-          Flexible(
-              child: _controller.loading.value
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView(
-                      children: _controller.vocabularyList.value
-                          .map((vocabulary) => VocabularyRow(
-                                english: vocabulary.english,
-                                japanese: vocabulary.japanese,
-                                englishVisible: settingNotifier.english,
-                                japaneseVisible: settingNotifier.japanese,
-                              ))
-                          .toList())),
+          Flexible(child: _dispView()),
         ],
       ),
       floatingActionButton: FloatingActionButton(
