@@ -27,7 +27,7 @@ class Home extends HookConsumerWidget {
 
     const astToSetupView = Center(child: Text('Setting画面で表示設定をしよう⭐️'));
 
-    Widget _dispView() {
+    final Widget _dispView = useMemoized(() {
       if (!settingNotifier.english && !settingNotifier.japanese) {
         return astToSetupView;
       }
@@ -35,12 +35,16 @@ class Home extends HookConsumerWidget {
         return loadingView;
       }
       return vocabularyListView;
-    }
+    }, [
+      settingNotifier.english,
+      settingNotifier.japanese,
+      _controller.loading.value
+    ]);
 
     return Scaffold(
       body: Column(
         children: [
-          Flexible(child: _dispView()),
+          Flexible(child: _dispView),
         ],
       ),
       floatingActionButton: FloatingActionButton(
